@@ -17,14 +17,6 @@ import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 
 const Graph = () => {
-  const { data: session, status } = useSession();
-  const router = useRouter();
-
-  if (status === "unauthenticated") {
-    router.push("/");
-    return null;
-  }
-
   const { isPending, isError, isSuccess, data, error } = useQuery({
     queryKey: ["moods"],
     queryFn: async () => {
@@ -32,6 +24,13 @@ const Graph = () => {
       return response.data as MoodDocument[];
     },
   });
+  const { status } = useSession();
+  const router = useRouter();
+
+  if (status === "unauthenticated") {
+    router.push("/");
+    return null;
+  }
 
   if (isPending || status === "loading") {
     return (
