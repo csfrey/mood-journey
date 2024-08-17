@@ -9,12 +9,6 @@ import { useSession } from "next-auth/react";
 import { redirect } from "next/navigation";
 
 const Journal = () => {
-  const { data: session, status } = useSession();
-
-  if (status === "unauthenticated") {
-    return redirect("/");
-  }
-
   const { isPending, isError, isSuccess, data, error } = useQuery({
     queryKey: ["moods"],
     queryFn: async () => {
@@ -22,6 +16,12 @@ const Journal = () => {
       return response.data as MoodDocument[];
     },
   });
+
+  const { data: session, status } = useSession();
+
+  if (status === "unauthenticated") {
+    return redirect("/");
+  }
 
   if (isPending || status === "loading") {
     return (
