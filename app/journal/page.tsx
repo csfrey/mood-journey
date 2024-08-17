@@ -43,14 +43,17 @@ const Journal = () => {
 
   return (
     <main className="p-4 flex flex-col-reverse gap-4">
-      {data.map((mood) => {
+      {data.map((mood, i) => {
         const bgColor = calculateColorInRange(
           mood.rating,
           "#be123c",
           "#15803d"
         );
         return (
-          <div className="w-[500px] p-4 pb-0 mx-auto bg-slate-800 rounded-lg shadow-lg">
+          <div
+            key={`journal-${i}`}
+            className="w-[500px] p-4 pb-0 mx-auto bg-slate-800 rounded-lg shadow-lg"
+          >
             <div
               className={`float-left mr-4 mb-2 font-brand text-center text-xl rounded-full w-16 h-16 flex flex-col justify-center`}
               style={{
