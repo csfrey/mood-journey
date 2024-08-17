@@ -6,9 +6,17 @@ import { MoodDocument } from "@/app/models/Mood";
 import { HashLoader } from "react-spinners";
 import { calculateColorInRange, parseDateString } from "../lib/utils";
 import { useSession } from "next-auth/react";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 const Journal = () => {
+  const { data: session, status } = useSession();
+  const router = useRouter();
+
+  if (status === "unauthenticated") {
+    router.push("/");
+    return null;
+  }
+
   const { isPending, isError, isSuccess, data, error } = useQuery({
     queryKey: ["moods"],
     queryFn: async () => {
@@ -16,12 +24,6 @@ const Journal = () => {
       return response.data as MoodDocument[];
     },
   });
-
-  const { data: session, status } = useSession();
-
-  if (status === "unauthenticated") {
-    return redirect("/");
-  }
 
   if (isPending || status === "loading") {
     return (

@@ -14,9 +14,17 @@ import {
 } from "recharts";
 import { parseDateString } from "../lib/utils";
 import { useSession } from "next-auth/react";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 const Graph = () => {
+  const { data: session, status } = useSession();
+  const router = useRouter();
+
+  if (status === "unauthenticated") {
+    router.push("/");
+    return null;
+  }
+
   const { isPending, isError, isSuccess, data, error } = useQuery({
     queryKey: ["moods"],
     queryFn: async () => {
@@ -24,12 +32,6 @@ const Graph = () => {
       return response.data as MoodDocument[];
     },
   });
-
-  const { data: session, status } = useSession();
-
-  if (status === "unauthenticated") {
-    return redirect("/");
-  }
 
   if (isPending || status === "loading") {
     return (
@@ -66,10 +68,9 @@ const Graph = () => {
           />
           <YAxis type="number" stroke="#fff" />
           <Tooltip
-            formatter={(value, name, props) => {
-              console.log(value, name, props);
-              return `${value} (${parseDateString(props.payload.createdAt)})`;
-            }}
+            formatter={(value, name, props) =>
+              `${value} (${parseDateString(props.payload.createdAt)})`
+            }
           />
         </LineChart>
       </div>
