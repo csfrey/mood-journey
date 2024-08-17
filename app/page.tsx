@@ -20,7 +20,7 @@ export default async function Home() {
         <div className="font-brand text-xl mb-4">Aug 16, 2024</div>
         <div>
           Please note: this is a demo application that I built for fun. Your
-          data is NOT secure. Don't say anything here that would put you or
+          data is NOT secure. Don&apos;t say anything here that would put you or
           anyone else at risk. In a later update I plan to encrypt all user data
           so there is a degree of privacy, but currently there is very little.
         </div>

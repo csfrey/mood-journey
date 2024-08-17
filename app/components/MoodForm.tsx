@@ -124,7 +124,9 @@ const MoodForm = () => {
   const alreadyEnteredToday = (
     <main className="p-4">
       <div className="w-[500px] p-4 mx-auto bg-slate-800 rounded-lg shadow-lg">
-        <div className="mb-4">You've already entered a Mood for today!</div>
+        <div className="mb-4">
+          You&apos;ve already entered a Mood for today!
+        </div>
         <div className="flex justify-center">
           <button
             onClick={() => setFormState("newEntry")}
