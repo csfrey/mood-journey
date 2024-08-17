@@ -54,7 +54,7 @@ const MoodForm = () => {
     } else {
       setFormState("newEntry");
     }
-  }, [querySuccess]);
+  }, [querySuccess, data]);
 
   useEffect(() => {
     if (submitSuccess) {
